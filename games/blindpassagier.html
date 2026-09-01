@@ -21,6 +21,7 @@
     --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  [hidden]{display:none!important}
   html,body{margin:0;min-height:100%}
   body{
     background:var(--night);
@@ -188,7 +189,7 @@
 
     <div class="stack">
       <button class="primary" id="btn-start">Boarding</button>
-      <p class="foot">Funktioniert komplett offline — im Flugmodus genauso.</p>
+      <p class="foot" id="foot">Funktioniert komplett offline — im Flugmodus genauso.</p>
     </div>
   </section>
 
@@ -277,16 +278,52 @@
   "use strict";
 
   var CATS = [
-    {n:"Am Flughafen", w:["Koffer","Bordkarte","Sicherheitskontrolle","Gepäckband","Startbahn","Duty-free-Shop","Handgepäck","Fensterplatz","Notausgang","Pilot","Turbulenzen","Verspätung"]},
-    {n:"Urlaub", w:["Sonnencreme","Strandliege","Taverne","Olivenbaum","Souvenir","Sandburg","Schnorchel","Hotelbuffet","Postkarte","Sonnenbrand","Mietwagen","Hafen"]},
-    {n:"Essen & Trinken", w:["Tiefkühlpizza","Spaghetti","Zwiebel","Kaugummi","Grillwurst","Marmelade","Wassermelone","Käsekuchen","Popcorn","Knoblauch","Nudelsalat","Eiswürfel"]},
-    {n:"Tiere", w:["Elefant","Pinguin","Meerschweinchen","Fledermaus","Qualle","Eichhörnchen","Kamel","Papagei","Igel","Delfin","Marienkäfer","Schäferhund"]},
-    {n:"Zuhause", w:["Waschmaschine","Staubsauger","Sofa","Zahnbürste","Kühlschrank","Wäscheleine","Bügeleisen","Fernbedienung","Blumentopf","Wecker","Klopapier","Dachboden"]},
-    {n:"Berufe", w:["Zahnarzt","Feuerwehrmann","Friseurin","Busfahrer","Lehrerin","Bäcker","Krankenpfleger","Polizistin","Landwirt","Kellner","Tierärztin","Handwerker"]},
-    {n:"Draußen", w:["Gewitter","Regenbogen","Lagerfeuer","Schneeball","Wanderweg","Fahrradtour","Baumhaus","Vollmond","Nebel","Picknick","Wasserfall","Sonnenaufgang"]},
-    {n:"Familie & Feiern", w:["Geburtstagstorte","Hochzeit","Weihnachtsbaum","Familienfoto","Silvesterfeuerwerk","Kaffeeklatsch","Umzugskartons","Erster Schultag","Grillabend","Fotoalbum","Ostereier","Gute-Nacht-Kuss"]},
-    {n:"Alltag & Körper", w:["Schluckauf","Niesen","Kopfschmerzen","Kitzeln","Gähnen","Mittagsschlaf","Schnarchen","Sonnenbrille","Zahnspange","Muskelkater","Kalte Füße","Warteschlange"]},
-    {n:"Technik", w:["Handyakku","WLAN-Passwort","Kopfhörer","Selfie","Sprachnachricht","Ladekabel","Bildschirmzeit","Videoanruf","Autokorrektur","Bluetooth-Box","Werbepause","Gruppenchat"]}
+    {n:"Tiere im Wald", w:["Fuchs","Reh","Wildschwein","Eichhörnchen","Specht","Ameisenhaufen","Igel","Eule","Hirschgeweih","Wildkaninchen","Marder","Moos"]},
+    {n:"Tiere im Zoo", w:["Elefant","Pinguin","Giraffe","Löwe","Affenfelsen","Krokodil","Kamel","Papagei","Nilpferd","Erdmännchen","Flamingo","Schlangenhaus"]},
+    {n:"Rund ums Haustier", w:["Wellensittich","Meerschweinchen","Goldfisch","Katzenklo","Hundeleine","Hamsterrad","Kratzbaum","Kaninchenstall","Welpe","Halsband","Trockenfutter","Gassi gehen"]},
+    {n:"Im Meer", w:["Qualle","Delfin","Hai","Seestern","Wal","Muschel","Tintenfisch","Seepferdchen","Robbe","Koralle","Krebs","Möwe"]},
+    {n:"Obst & Gemüse", w:["Wassermelone","Knoblauch","Zwiebel","Erdbeere","Kürbis","Avocado","Rosenkohl","Ananas","Kartoffel","Weintraube","Paprika","Zitrone"]},
+    {n:"Süßes", w:["Gummibärchen","Schokolade","Eiswaffel","Kaugummi","Lakritz","Marshmallow","Käsekuchen","Zuckerwatte","Nussnougatcreme","Lebkuchen","Karamell","Schokoriegel"]},
+    {n:"Herzhaftes", w:["Tiefkühlpizza","Currywurst","Nudelsalat","Döner","Rührei","Bratkartoffeln","Lasagne","Pommes","Grillwurst","Butterbrot","Sushi","Gulaschsuppe"]},
+    {n:"Getränke", w:["Kaffee","Sprudelwasser","Orangensaft","Glühwein","Kakao","Cocktail","Kräutertee","Weizenbier","Smoothie","Limonade","Sektglas","Eiswürfel"]},
+    {n:"In der Küche", w:["Kühlschrank","Backofen","Nudelsieb","Kaffeemaschine","Schneidebrett","Spülmaschine","Mikrowelle","Dosenöffner","Küchenrolle","Gefrierfach","Kochlöffel","Mülleimer"]},
+    {n:"Im Bad", w:["Zahnbürste","Duschgel","Handtuch","Badewanne","Badezimmerspiegel","Föhn","Klopapier","Rasierer","Personenwaage","Nagelschere","Wattestäbchen","Duschvorhang"]},
+    {n:"Wohnen & Möbel", w:["Sofa","Bücherregal","Teppich","Nachttisch","Kleiderschrank","Hängematte","Schaukelstuhl","Kaminfeuer","Gardine","Stehlampe","Dachboden","Sofakissen"]},
+    {n:"Haushalt", w:["Staubsauger","Wäscheleine","Bügeleisen","Waschmaschine","Putzlappen","Wäschekorb","Staubwedel","Fensterputzen","Waschmittel","Gummihandschuhe","Besen","Müll rausbringen"]},
+    {n:"Werkzeug & Keller", w:["Bohrmaschine","Hammer","Schraubenzieher","Zollstock","Leiter","Klebeband","Nagel","Werkbank","Taschenlampe","Farbeimer","Handsäge","Wasserwaage"]},
+    {n:"Im Garten", w:["Rasenmäher","Gartenzwerg","Gießkanne","Komposthaufen","Hochbeet","Gartenschlauch","Sonnenschirm","Vogelhäuschen","Unkraut","Grill","Hollywoodschaukel","Blumentopf"]},
+    {n:"Wetter", w:["Gewitter","Regenbogen","Nebel","Hagelkörner","Schneesturm","Hitzewelle","Sonnenaufgang","Windböe","Pfütze","Glatteis","Vollmond","Wolkenbruch"]},
+    {n:"Am Strand", w:["Sandburg","Strandliege","Sonnencreme","Luftmatratze","Leuchtturm","Schnorchel","Ebbe","Strandkorb","Sonnenbrand","Wellenreiten","Badehose","Strandmuschel"]},
+    {n:"Berge & Wandern", w:["Wanderstock","Gipfelkreuz","Rucksack","Seilbahn","Almhütte","Blase am Fuß","Bergsee","Lawine","Kuhglocke","Wanderkarte","Klettersteig","Brotzeit"]},
+    {n:"Winter", w:["Schneeball","Schlitten","Schneemann","Eiszapfen","Skilift","Fäustlinge","Glühweinstand","Schneeschaufel","Eislaufen","Wintermantel","Schneeflocke","Rodelbahn"]},
+    {n:"Weltraum", w:["Rakete","Astronaut","Mondlandung","Sternschnuppe","Teleskop","Schwerelosigkeit","Sonnenfinsternis","Ufo","Satellit","Milchstraße","Raumanzug","Komet"]},
+    {n:"Körper & Zipperlein", w:["Schluckauf","Niesen","Gänsehaut","Muskelkater","Zahnspange","Sommersprossen","Bauchnabel","Augenbraue","Kitzeln","Gähnen","Schnarchen","Herzklopfen"]},
+    {n:"Kleidung", w:["Wollpullover","Gummistiefel","Bikini","Krawatte","Jogginghose","Ringelsocken","Baseballcap","Reißverschluss","Hausschuhe","Regenjacke","Ledergürtel","Wollschal"]},
+    {n:"Schmuck & Kosmetik", w:["Ohrringe","Lippenstift","Nagellack","Armbanduhr","Ehering","Parfüm","Halskette","Haarspange","Sonnenbrille","Wimperntusche","Tätowierung","Handtasche"]},
+    {n:"Schule", w:["Schultafel","Pausenhof","Hausaufgaben","Zeugnis","Federmäppchen","Klassenfahrt","Schulbus","Mathearbeit","Sitzenbleiben","Turnhalle","Schulranzen","Erster Schultag"]},
+    {n:"Büro & Arbeit", w:["Bewerbungsgespräch","Kaffeepause","Drucker","Videokonferenz","Gehaltserhöhung","Aktenordner","Feierabend","Überstunden","Schreibtisch","Besprechungsraum","Urlaubsantrag","Kantine"]},
+    {n:"Berufe", w:["Zahnarzt","Feuerwehrmann","Friseurin","Busfahrer","Bäcker","Polizistin","Landwirt","Kellner","Tierärztin","Pilot","Krankenpfleger","Müllabfuhr"]},
+    {n:"Arzt & Krankenhaus", w:["Spritze","Gipsarm","Wartezimmer","Fieberthermometer","Röntgenbild","Pflaster","Krankenwagen","Rezept","Blutabnahme","Hustensaft","Operationssaal","Krücken"]},
+    {n:"Sport", w:["Fußballtor","Marathon","Yogamatte","Schwimmbad","Fahrradtour","Tischtennis","Boxkampf","Fitnessstudio","Skifahren","Torwart","Reiten","Schiedsrichter"]},
+    {n:"Musik", w:["Klavier","Schlagzeug","Gitarre","Chorprobe","Ohrwurm","Konzertkarte","Kopfhörer","Blockflöte","Karaoke","Dirigent","Plattenspieler","Lagerfeuerlied"]},
+    {n:"Film & Fernsehen", w:["Popcorn","Fernbedienung","Werbepause","Untertitel","Tatort","Nachrichtensprecher","Serienmarathon","Kinosaal","Horrorfilm","Zeichentrickfilm","Abspann","Roter Teppich"]},
+    {n:"Spiele & Spielzeug", w:["Puzzle","Legosteine","Kartenspiel","Würfelbecher","Schaukel","Teddybär","Springseil","Murmeln","Versteckspiel","Brettspiel","Modelleisenbahn","Bauklötze"]},
+    {n:"Feste & Feiertage", w:["Geburtstagstorte","Weihnachtsbaum","Silvesterfeuerwerk","Ostereier","Hochzeit","Karneval","Adventskalender","Halloweenkürbis","Muttertag","Konfetti","Nikolausstiefel","Polterabend"]},
+    {n:"Familie", w:["Familienfoto","Oma","Kinderwagen","Umzugskartons","Schwiegermutter","Geschwisterstreit","Erbstück","Gute-Nacht-Kuss","Stammbaum","Babyfon","Sonntagsbraten","Kaffeeklatsch"]},
+    {n:"Gefühle", w:["Heimweh","Eifersucht","Lampenfieber","Schadenfreude","Verliebtsein","Langeweile","Stolz","Nervosität","Vorfreude","Erleichterung","Fernweh","Peinliche Stille"]},
+    {n:"Auto & Straße", w:["Stau","Fahrradweg","Ampel","Parkplatzsuche","Tankstelle","Baustelle","Blitzer","Zebrastreifen","Umleitung","Winterreifen","Anhänger","Wagenheber"]},
+    {n:"Bahn & Bus", w:["Zugverspätung","Fahrkarte","Bahnsteig","Schaffner","Nachtzug","Sitzplatzreservierung","Straßenbahn","Haltestelle","Gepäckablage","Speisewagen","Fahrplan","Bahnhofsuhr"]},
+    {n:"Am Flughafen", w:["Koffer","Bordkarte","Sicherheitskontrolle","Gepäckband","Startbahn","Duty-free-Shop","Handgepäck","Fensterplatz","Notausgang","Turbulenzen","Zwischenlandung","Jetlag"]},
+    {n:"Urlaub", w:["Hotelbuffet","Souvenir","Postkarte","Mietwagen","Reiseführer","Pauschalreise","Zimmerschlüssel","Ferienwohnung","Reisepass","Kofferpacken","Liegestuhl","Taverne"]},
+    {n:"Stadt & Gebäude", w:["Kirchturm","Rathaus","Wolkenkratzer","Fußgängerzone","Springbrunnen","Wochenmarkt","Brücke","Straßenmusiker","Denkmal","Bibliothek","Aufzug","Rolltreppe"]},
+    {n:"Einkaufen", w:["Einkaufswagen","Kassenschlange","Kassenbon","Sonderangebot","Umkleidekabine","Pfandflasche","Schaufenster","Online-Bestellung","Umtausch","Einkaufsliste","Tragetasche","Selbstbedienungskasse"]},
+    {n:"Geld", w:["Sparschwein","Kleingeld","Trinkgeld","Kontoauszug","Kreditkarte","Miete","Lottoschein","Taschengeld","Rechnung","Steuererklärung","Erbschaft","Geldautomat"]},
+    {n:"Handy & Technik", w:["Handyakku","Ladekabel","WLAN-Passwort","Autokorrektur","Bildschirmzeit","Sprachnachricht","Videoanruf","Selfie","Bluetooth-Box","Passwort vergessen","Software-Update","Displayriss"]},
+    {n:"Internet", w:["Gruppenchat","Emoji","Katzenvideo","Onlineshopping","Streamingdienst","Podcast","Werbung überspringen","Suchmaschine","Livestream","Kommentarspalte","Meme","Cookie-Banner"]},
+    {n:"Bauernhof", w:["Traktor","Heuballen","Melken","Misthaufen","Hühnerstall","Weidezaun","Erntezeit","Scheune","Schafschur","Vogelscheuche","Ferkel","Milchkanne"]},
+    {n:"Märchen & Fantasie", w:["Drache","Zauberstab","Hexe","Ritterburg","Schatzkarte","Einhorn","Zwerg","Zauberspruch","Prinzessin","Gespenst","Wunschbrunnen","Fliegender Teppich"]},
+    {n:"Jahrmarkt", w:["Riesenrad","Achterbahn","Losbude","Karussell","Clown","Jongleur","Geisterbahn","Zirkuszelt","Feuerschlucker","Autoscooter","Schießbude","Bratwurstbude"]},
+    {n:"Morgens & Abends", w:["Wecker","Snooze-Taste","Morgenmuffel","Zähneputzen","Mittagsschlaf","Schlafanzug","Kaffee kochen","Bettdecke","Einschlafen vor dem Fernseher","Aufstehen im Dunkeln","Gute-Nacht-Geschichte","Frühstücksei"]}
   ];
 
   function hash(str){
@@ -338,21 +375,67 @@
     return n ? (n + " \u00b7 Platz " + i) : ("Platz " + i);
   }
 
-  // One round is a pure function of its key, so in "own phone" mode every
-  // device that typed the same code computes the identical round offline.
-  function roundKey(){
-    return S.mode === "solo"
-      ? "S" + S.seed + "#" + S.round
-      : S.code.toUpperCase() + "#" + S.round;
+  // Ein Spiel = ein gemischter Stapel aus allen Wörtern. Runde N nimmt die
+  // N-te Karte, also wiederholt sich kein Wort, bevor der Stapel durch ist.
+  // Der Stapel haengt nur am Spiel-Schluessel, damit im Mehr-Handy-Modus
+  // jedes Geraet offline denselben Stapel in derselben Reihenfolge baut.
+  var deckCache = { key:null, list:null };
+  function gameKey(){
+    return S.mode === "solo" ? "S" + S.seed : S.code.toUpperCase();
+  }
+  function deck(){
+    var key = gameKey();
+    if (deckCache.key === key) return deckCache.list;
+    var all = [], i, j;
+    for (i=0;i<CATS.length;i++){
+      for (j=0;j<CATS[i].w.length;j++) all.push({ c:CATS[i].n, w:CATS[i].w[j] });
+    }
+    var rng = mulberry32(hash(key)), t, m;
+    for (i=all.length-1;i>0;i--){ m = Math.floor(rng()*(i+1)); t=all[i]; all[i]=all[m]; all[m]=t; }
+    // Zwei Runden hintereinander dieselbe Kategorie waere langweilig - die
+    // zweite wird nach hinten getauscht, sobald es passt.
+    for (i=1;i<all.length;i++){
+      if (all[i].c !== all[i-1].c) continue;
+      for (j=i+1;j<all.length;j++){
+        if (all[j].c !== all[i-1].c){ t=all[i]; all[i]=all[j]; all[j]=t; break; }
+      }
+    }
+    deckCache.key = key; deckCache.list = all;
+    return all;
+  }
+  function roundKey(){ return gameKey() + "#" + S.round; }
+
+  // Reiner Zufall wirft durchaus achtmal dieselbe Person hintereinander zum
+  // Blindpassagier. Das ist statistisch in Ordnung und am Tisch trotzdem
+  // Frust, also ist nach zweimal in Folge jemand anderes dran. Die Rollen
+  // werden von Runde 1 an aufgebaut, damit alle Handys dasselbe rechnen.
+  var impCache = { key:null, list:[] };
+  function impostorAt(round){
+    var key = gameKey() + "|" + S.players;
+    if (impCache.key !== key){ impCache.key = key; impCache.list = []; }
+    var l = impCache.list;
+    for (var r = l.length + 1; r <= round; r++){
+      var rng = mulberry32(hash(key + "#" + r + "r"));
+      var imp = 1 + Math.floor(rng() * S.players);
+      if (r >= 3 && l[r-2] === imp && l[r-3] === imp){
+        var shift = 1 + Math.floor(rng() * (S.players - 1));
+        imp = 1 + ((imp - 1 + shift) % S.players);
+      }
+      l.push(imp);
+    }
+    return l[round-1];
   }
   function roundData(){
-    var rng = mulberry32(hash(roundKey()));
-    var cat = CATS[Math.floor(rng() * CATS.length)];
-    var word = cat.w[Math.floor(rng() * cat.w.length)];
-    var impostor = 1 + Math.floor(rng() * S.players);
-    var starter = 1 + Math.floor(rng() * S.players);
-    var flight = "KR " + (100 + (hash(roundKey()) % 899));
-    return { cat:cat.n, word:word, impostor:impostor, starter:starter, flight:flight };
+    var d = deck();
+    var card = d[(S.round - 1) % d.length];
+    var srng = mulberry32(hash(roundKey() + "s"));
+    return {
+      cat: card.c,
+      word: card.w,
+      impostor: impostorAt(S.round),
+      starter: 1 + Math.floor(srng() * S.players),
+      flight: "KR " + (100 + (hash(roundKey()) % 899))
+    };
   }
   function barcode(seed){
     var rng = mulberry32(hash(seed));
@@ -433,7 +516,7 @@
     S.players = parseInt(selP.value,10);
     S.seat = parseInt(selS.value,10);
     save();
-    if (S.mode === "solo"){ S.round = 1; S.seed = newSeed(); startHandoff(); }
+    if (S.mode === "solo"){ S.round = 1; S.seed = newSeed(); deckCache.key = null; impCache.key = null; startHandoff(); }
     else { renderHub(); show("hub"); }
   });
   $("btn-setup").addEventListener("click", function(){ stopTimer(); show("setup"); });
@@ -583,9 +666,14 @@
   $("btn-back2").addEventListener("click", function(){ show("hub"); });
   $("btn-next").addEventListener("click", function(){
     S.round++;
-    if (S.mode === "solo"){ S.seed = newSeed(); startHandoff(); }
+    if (S.mode === "solo"){ startHandoff(); }
     else { renderHub(); show("hub"); }
   });
+
+  var wordCount = 0;
+  for (var ci=0; ci<CATS.length; ci++) wordCount += CATS[ci].w.length;
+  $("foot").textContent = wordCount + " Wörter in " + CATS.length +
+    " Kategorien · funktioniert komplett offline";
 
   renderHub();
   show("setup");
