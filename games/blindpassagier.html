@@ -44,19 +44,15 @@
     gap:18px;
   }
   header{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-  .brand{
-    font-family:var(--sans);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--ticket);
-  }
+  .brand{font-family:var(--sans);font-weight:800;font-size:19px;letter-spacing:-.02em}
   .brand span{color:var(--stamp)}
   .flightno{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
 
   .screen{display:flex;flex-direction:column;gap:18px;flex:1}
   .screen[hidden]{display:none}
 
-  h2{
-    font-family:var(--sans);font-weight:800;font-size:23px;line-height:1.15;letter-spacing:-.02em;
-    margin:0;text-wrap:balance;
-  }
+  h2{font-family:var(--sans);font-weight:800;font-size:23px;line-height:1.15;letter-spacing:-.02em;margin:0;text-wrap:balance}
+  h2.huge{font-size:clamp(30px,9vw,42px);letter-spacing:-.03em}
   .lede{color:var(--dim);margin:0;font-size:13.5px}
 
   .field{display:flex;flex-direction:column;gap:7px}
@@ -67,10 +63,13 @@
     border:1px solid var(--line);border-radius:10px;
     padding:14px 15px;appearance:none;
   }
-  input{text-transform:uppercase;letter-spacing:.28em}
+  #code{text-transform:uppercase;letter-spacing:.28em}
+  input.name{font-size:16px;font-weight:500;letter-spacing:0;padding:12px 14px}
+  input::placeholder{color:#4E6674}
   input:focus,select:focus,button:focus-visible{outline:2px solid var(--sky);outline-offset:2px}
   .row{display:flex;gap:12px}
   .row .field{flex:1}
+  .names{display:flex;flex-direction:column;gap:8px}
 
   button{
     font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
@@ -79,23 +78,20 @@
   }
   button.primary{background:var(--stamp);border-color:var(--stamp);color:#FFF3EC}
   button.ghost{background:transparent;color:var(--dim)}
-  button:active{transform:translateY(1px)}
+  button:disabled{opacity:.35}
+  button:active:not(:disabled){transform:translateY(1px)}
   .stack{display:flex;flex-direction:column;gap:10px;margin-top:auto}
 
-  /* boarding pass */
-  .pass{
-    background:var(--ticket);color:var(--ink);border-radius:14px;overflow:hidden;
-    box-shadow:0 18px 40px rgba(0,0,0,.45);
-  }
+  .seg{display:flex;gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .seg button{flex:1;border:0;border-radius:0;background:transparent;color:var(--dim);min-height:48px;font-size:12px;letter-spacing:.1em}
+  .seg button.on{background:var(--night-2);color:var(--ticket);box-shadow:inset 0 -2px 0 var(--stamp)}
+
+  .pass{background:var(--ticket);color:var(--ink);border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.45)}
   .pass-top{padding:16px 18px 14px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
   .pass-label{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#6D7C84}
-  .pass-val{font-size:15px;font-weight:600;letter-spacing:.06em}
-  .perf{
-    border-top:2px dashed #C9BCA3;position:relative;
-  }
-  .perf::before,.perf::after{
-    content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--night);
-  }
+  .pass-val{font-size:15px;font-weight:600;letter-spacing:.04em}
+  .perf{border-top:2px dashed #C9BCA3;position:relative}
+  .perf::before,.perf::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:var(--night)}
   .perf::before{left:-11px}
   .perf::after{right:-11px}
   .pass-main{padding:22px 18px 18px;text-align:center}
@@ -106,36 +102,38 @@
   .destination.secret{color:var(--stamp)}
   .cat{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#6D7C84}
   .barcode{height:44px;margin:16px -18px -18px;background:var(--ticket-2)}
-  .hidden-note{
-    padding:34px 18px;text-align:center;color:#8A9AA2;font-size:13px;
-  }
+  .hidden-note{padding:34px 18px;text-align:center;color:#8A9AA2;font-size:13px}
   .stampmark{
     display:inline-block;border:2px solid var(--stamp);color:var(--stamp);
     padding:5px 11px;border-radius:6px;transform:rotate(-4deg);
     font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
   }
 
-  .roundbar{
-    display:flex;align-items:center;justify-content:space-between;gap:10px;
-    background:var(--night-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;
-  }
+  .roundbar{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    background:var(--night-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
   .roundbar .n{font-family:var(--sans);font-weight:800;font-size:26px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
   .roundbar button{min-height:40px;padding:8px 14px;font-size:17px;letter-spacing:0}
+  .roundbar button[hidden]{display:none}
   .meta{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--dim)}
   .meta b{color:var(--sky);font-weight:600}
+  .meta span[hidden]{display:none}
 
-  .timer{
-    font-family:var(--sans);font-weight:800;font-size:44px;letter-spacing:-.03em;
-    text-align:center;font-variant-numeric:tabular-nums;color:var(--sky);
-  }
+  #s-pass .pass,#s-reveal .pass{margin:auto 0}
+  .dots{display:flex;gap:7px;justify-content:center}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+  .dot.on{background:var(--sky)}
+  .dot.now{background:var(--stamp);transform:scale(1.35)}
+
+  .timer{font-family:var(--sans);font-weight:800;font-size:44px;letter-spacing:-.03em;
+    text-align:center;font-variant-numeric:tabular-nums;color:var(--sky)}
   .timer.done{color:var(--stamp)}
 
   details{border-top:1px solid var(--line);padding-top:12px}
   summary{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--sky);cursor:pointer}
   details ol{margin:12px 0 0;padding-left:20px;color:var(--dim);font-size:13px;display:flex;flex-direction:column;gap:8px}
   details b{color:var(--ticket);font-weight:600}
-  .foot{font-size:11px;color:var(--dim);text-align:center}
-  @media (prefers-reduced-motion:reduce){button:active{transform:none}}
+  .foot{font-size:11px;color:var(--dim);text-align:center;margin:0}
+  @media (prefers-reduced-motion:reduce){button:active{transform:none}.dot.now{transform:none}}
 </style>
 </head>
 <body>
@@ -148,34 +146,81 @@
   <!-- SETUP -->
   <section class="screen" id="s-setup">
     <h2>Ein Wort kennen alle. Einer nicht.</h2>
-    <p class="lede">Alle tippen denselben Code und dieselbe Spielerzahl ein — jeder aber seinen eigenen Platz. Danach braucht ihr kein Netz mehr.</p>
-    <div class="field">
-      <label class="label" for="code">Runden-Code (alle gleich)</label>
-      <input id="code" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" value="KRETA">
+    <div class="seg" id="seg">
+      <button type="button" data-mode="solo" class="on">Ein Handy</button>
+      <button type="button" data-mode="sync">Jeder eigenes</button>
     </div>
+    <p class="lede" id="mode-hint">Ein Handy reicht: Es geht reihum, jeder deckt seinen Pass kurz selbst auf.</p>
+
+    <div id="sync-only" hidden>
+      <div class="field">
+        <label class="label" for="code">Runden-Code (bei allen gleich)</label>
+        <input id="code" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" value="KRETA">
+      </div>
+    </div>
+
     <div class="row">
       <div class="field">
         <label class="label" for="players">Spieler</label>
         <select id="players"></select>
       </div>
-      <div class="field">
+      <div class="field" id="seat-field" hidden>
         <label class="label" for="seat">Mein Platz</label>
         <select id="seat"></select>
       </div>
     </div>
+
+    <div class="field" id="names-field">
+      <span class="label">Namen (optional)</span>
+      <div class="names" id="names"></div>
+    </div>
+
     <details>
       <summary>Spielregeln</summary>
       <ol>
-        <li>Jede Runde zeigt jedes Handy dasselbe <b>Geheimwort</b> — nur einer bekommt stattdessen „Blindpassagier“ und sieht bloß die Kategorie.</li>
+        <li>Jede Runde bekommen alle dasselbe <b>Geheimwort</b> — nur einer bekommt stattdessen „Blindpassagier“ und sieht bloß die Kategorie.</li>
         <li>Der angezeigte Startspieler sagt <b>ein einziges Wort</b>, das zum Geheimwort passt. Dann reihum. Zwei Durchgänge.</li>
         <li>Zu offensichtlich, und der Blindpassagier errät das Wort. Zu vage, und ihr verdächtigt euch selbst.</li>
         <li>Danach auf drei alle gleichzeitig auf eine Person zeigen.</li>
         <li><b>Punkte:</b> Blindpassagier enttarnt → alle anderen 1 Punkt. Nicht enttarnt → Blindpassagier 2 Punkte. Errät er nach dem Enttarnen das Wort → trotzdem 1 Punkt.</li>
       </ol>
     </details>
+
     <div class="stack">
       <button class="primary" id="btn-start">Boarding</button>
       <p class="foot">Funktioniert komplett offline — im Flugmodus genauso.</p>
+    </div>
+  </section>
+
+  <!-- HANDOFF (nur Ein-Handy-Modus) -->
+  <section class="screen" id="s-handoff" hidden>
+    <div style="margin:auto 0;text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center">
+      <div class="dots" id="dots"></div>
+      <div class="label">Handy weitergeben an</div>
+      <h2 class="huge" id="h-name">Mama</h2>
+      <p class="lede" id="h-sub">Nur Mama darf jetzt draufschauen.</p>
+    </div>
+    <div class="stack">
+      <button class="primary" id="btn-iam">Ich bin dran</button>
+    </div>
+  </section>
+
+  <!-- PASS -->
+  <section class="screen" id="s-pass" hidden>
+    <div class="pass">
+      <div class="pass-top">
+        <div><div class="pass-label">Passagier</div><div class="pass-val" id="p-seat">Platz 1</div></div>
+        <div style="text-align:right"><div class="pass-label">Flug</div><div class="pass-val" id="p-flight">KR 001</div></div>
+      </div>
+      <div class="perf"></div>
+      <div class="pass-main" id="p-main">
+        <div class="hidden-note">Zum Lesen gedrückt halten</div>
+      </div>
+    </div>
+    <div class="stack">
+      <button class="primary" id="btn-hold">Gedrückt halten</button>
+      <button id="btn-done" hidden disabled>Gesehen — weitergeben</button>
+      <button class="ghost" id="btn-back" hidden>Zurück</button>
     </div>
   </section>
 
@@ -190,36 +235,18 @@
       <button id="r-plus" aria-label="Runde vor">+</button>
     </div>
     <div class="meta">
-      <span>Code <b id="m-code">—</b></span>
+      <span id="m-code-wrap">Code <b id="m-code">—</b></span>
       <span>Spieler <b id="m-players">—</b></span>
-      <span>Mein Platz <b id="m-seat">—</b></span>
+      <span id="m-seat-wrap">Mein Platz <b id="m-seat">—</b></span>
     </div>
     <h2 id="starter">Es beginnt Platz 1.</h2>
-    <p class="lede">Halte den Knopf gedrückt, um deinen Pass zu lesen — er verschwindet sofort, wenn du loslässt.</p>
+    <p class="lede" id="hub-hint">Ein Wort pro Person, reihum. Dann zeigen alle gleichzeitig.</p>
     <div class="timer" id="timer">1:30</div>
     <div class="stack">
       <button class="primary" id="btn-pass">Pass gedrückt halten</button>
       <button id="btn-timer">Timer starten</button>
       <button id="btn-reveal">Auflösung</button>
       <button class="ghost" id="btn-setup">Einstellungen ändern</button>
-    </div>
-  </section>
-
-  <!-- PASS -->
-  <section class="screen" id="s-pass" hidden>
-    <div class="pass">
-      <div class="pass-top">
-        <div><div class="pass-label">Passagier</div><div class="pass-val" id="p-seat">Platz 1</div></div>
-        <div style="text-align:right"><div class="pass-label">Flug</div><div class="pass-val" id="p-flight">KR 001</div></div>
-      </div>
-      <div class="perf"></div>
-      <div class="pass-main" id="p-main">
-        <div class="hidden-note">Zum Lesen weiter gedrückt halten</div>
-      </div>
-    </div>
-    <div class="stack">
-      <button class="primary" id="btn-hold">Gedrückt halten</button>
-      <button class="ghost" id="btn-back">Zurück</button>
     </div>
   </section>
 
@@ -234,7 +261,7 @@
       <div class="pass-main">
         <div class="cat" id="v-cat">Kategorie</div>
         <div class="destination" id="v-word">Wort</div>
-        <div class="stampmark" id="v-imp">Blindpassagier: Platz 1</div>
+        <div class="stampmark" id="v-imp">Blindpassagier</div>
         <div class="barcode" id="v-bar"></div>
       </div>
     </div>
@@ -275,34 +302,58 @@
       return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
     };
   }
+  function newSeed(){ return Math.floor(Math.random() * 1e9); }
 
-  var S = { code:"KRETA", players:3, seat:1, round:1 };
+  var S = { mode:"solo", code:"KRETA", players:3, seat:1, round:1, seed:newSeed(), names:[], turn:1 };
   try {
     var saved = JSON.parse(localStorage.getItem("blindpassagier") || "null");
-    if (saved && saved.code) S = saved;
+    if (saved && saved.players){
+      S.mode = saved.mode === "sync" ? "sync" : "solo";
+      S.code = saved.code || "KRETA";
+      S.players = saved.players;
+      S.seat = saved.seat || 1;
+      S.names = saved.names || [];
+    }
   } catch(e){}
 
   var $ = function(id){ return document.getElementById(id); };
-  var screens = { setup:$("s-setup"), hub:$("s-hub"), pass:$("s-pass"), reveal:$("s-reveal") };
+  var screens = { setup:$("s-setup"), handoff:$("s-handoff"), pass:$("s-pass"), hub:$("s-hub"), reveal:$("s-reveal") };
 
-  function save(){ try { localStorage.setItem("blindpassagier", JSON.stringify(S)); } catch(e){} }
+  function save(){
+    try {
+      localStorage.setItem("blindpassagier", JSON.stringify({
+        mode:S.mode, code:S.code, players:S.players, seat:S.seat, names:S.names
+      }));
+    } catch(e){}
+  }
   function show(name){
     for (var k in screens) screens[k].hidden = (k !== name);
     window.scrollTo(0,0);
   }
+  function nameOf(i){
+    var n = (S.names[i-1] || "").trim();
+    if (S.mode === "solo") return n || ("Spieler " + i);
+    // Namen liegen nur lokal auf jedem Handy - im Mehr-Handy-Modus muss die
+    // Platznummer immer mit, sonst nennt jedes Handy dieselbe Person anders.
+    return n ? (n + " \u00b7 Platz " + i) : ("Platz " + i);
+  }
 
-  // Everything about a round is derived from code + round number, so every
-  // phone that typed the same code computes the identical round offline.
+  // One round is a pure function of its key, so in "own phone" mode every
+  // device that typed the same code computes the identical round offline.
+  function roundKey(){
+    return S.mode === "solo"
+      ? "S" + S.seed + "#" + S.round
+      : S.code.toUpperCase() + "#" + S.round;
+  }
   function roundData(){
-    var rng = mulberry32(hash(S.code.toUpperCase() + "#" + S.round));
+    var rng = mulberry32(hash(roundKey()));
     var cat = CATS[Math.floor(rng() * CATS.length)];
     var word = cat.w[Math.floor(rng() * cat.w.length)];
     var impostor = 1 + Math.floor(rng() * S.players);
     var starter = 1 + Math.floor(rng() * S.players);
-    var flight = "KR " + (100 + (hash(S.code.toUpperCase()) % 800) + S.round);
+    var flight = "KR " + (100 + (hash(roundKey()) % 899));
     return { cat:cat.n, word:word, impostor:impostor, starter:starter, flight:flight };
   }
-
   function barcode(seed){
     var rng = mulberry32(hash(seed));
     var css = "", x = 0;
@@ -316,9 +367,10 @@
     return "linear-gradient(90deg," + css.slice(0,-1) + ")";
   }
 
-  // --- setup ---
+  /* ---------- setup ---------- */
   var selP = $("players"), selS = $("seat");
   for (var i=3;i<=8;i++) selP.insertAdjacentHTML("beforeend", "<option value='"+i+"'>"+i+"</option>");
+
   function fillSeats(){
     selS.innerHTML = "";
     for (var i=1;i<=S.players;i++){
@@ -327,11 +379,50 @@
     if (S.seat > S.players) S.seat = 1;
     selS.value = String(S.seat);
   }
+  function fillNames(){
+    var box = $("names");
+    box.innerHTML = "";
+    for (var i=1;i<=S.players;i++){
+      var inp = document.createElement("input");
+      inp.className = "name";
+      inp.type = "text";
+      inp.maxLength = 14;
+      inp.autocomplete = "off";
+      inp.placeholder = (S.mode === "solo" ? "Spieler " : "Platz ") + i;
+      inp.value = S.names[i-1] || "";
+      inp.dataset.idx = i;
+      inp.addEventListener("input", function(e){
+        S.names[parseInt(e.target.dataset.idx,10)-1] = e.target.value;
+      });
+      box.appendChild(inp);
+    }
+  }
+  function renderMode(){
+    var solo = S.mode === "solo";
+    $("sync-only").hidden = solo;
+    $("seat-field").hidden = solo;
+    $("mode-hint").textContent = solo
+      ? "Ein Handy reicht: Es geht reihum, jeder deckt seinen Pass kurz selbst auf."
+      : "Jeder auf dem eigenen Handy — alle tippen denselben Code und dieselbe Spielerzahl ein.";
+    var btns = $("seg").children;
+    for (var i=0;i<btns.length;i++) btns[i].classList.toggle("on", btns[i].dataset.mode === S.mode);
+    fillNames();
+  }
+  $("seg").addEventListener("click", function(e){
+    var b = e.target.closest("button");
+    if (!b) return;
+    S.mode = b.dataset.mode;
+    save(); renderMode();
+  });
+
   $("code").value = S.code;
   selP.value = String(S.players);
-  fillSeats();
+  fillSeats(); renderMode();
 
-  selP.addEventListener("change", function(){ S.players = parseInt(selP.value,10); fillSeats(); });
+  selP.addEventListener("change", function(){
+    S.players = parseInt(selP.value,10);
+    fillSeats(); fillNames();
+  });
   selS.addEventListener("change", function(){ S.seat = parseInt(selS.value,10); });
   $("code").addEventListener("input", function(e){
     e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,"");
@@ -341,28 +432,123 @@
     S.code = ($("code").value || "KRETA").toUpperCase();
     S.players = parseInt(selP.value,10);
     S.seat = parseInt(selS.value,10);
-    save(); renderHub(); show("hub");
+    save();
+    if (S.mode === "solo"){ S.round = 1; S.seed = newSeed(); startHandoff(); }
+    else { renderHub(); show("hub"); }
   });
   $("btn-setup").addEventListener("click", function(){ stopTimer(); show("setup"); });
 
-  // --- hub ---
-  function renderHub(){
+  /* ---------- handoff (ein Handy) ---------- */
+  function startHandoff(){ S.turn = 1; renderHandoff(); show("handoff"); }
+  function renderHandoff(){
     var d = roundData();
+    $("flightno").textContent = "FLUG " + d.flight;
+    $("h-name").textContent = nameOf(S.turn);
+    $("h-sub").textContent = "Nur " + nameOf(S.turn) + " darf jetzt draufschauen.";
+    $("btn-iam").textContent = "Ich bin " + nameOf(S.turn);
+    var dots = $("dots");
+    dots.innerHTML = "";
+    for (var i=1;i<=S.players;i++){
+      var d2 = document.createElement("div");
+      d2.className = "dot" + (i < S.turn ? " on" : i === S.turn ? " now" : "");
+      dots.appendChild(d2);
+    }
+  }
+  $("btn-iam").addEventListener("click", function(){ openPass(); });
+
+  /* ---------- pass (halten zum Lesen) ---------- */
+  var holding = false, hasRead = false;
+
+  function whoAmI(){ return S.mode === "solo" ? S.turn : S.seat; }
+
+  function openPass(){
+    hasRead = false;
+    $("btn-done").hidden = (S.mode !== "solo");
+    $("btn-done").disabled = true;
+    $("btn-back").hidden = (S.mode === "solo");
+    renderPass(false);
+    show("pass");
+  }
+  function renderPass(reveal){
+    var d = roundData(), me = whoAmI();
+    $("p-seat").textContent = nameOf(me);
+    $("p-flight").textContent = d.flight;
+    if (!reveal){
+      $("p-main").innerHTML = '<div class="hidden-note">Zum Lesen gedrückt halten</div>';
+      return;
+    }
+    if (me === d.impostor){
+      $("p-main").innerHTML =
+        '<div class="cat">Ziel</div>' +
+        '<div class="destination secret">Unbekannt</div>' +
+        '<div class="cat">Kategorie: ' + d.cat + '</div>' +
+        '<div style="margin-top:14px"><span class="stampmark">Blindpassagier</span></div>' +
+        '<div class="barcode"></div>';
+    } else {
+      $("p-main").innerHTML =
+        '<div class="cat">' + d.cat + '</div>' +
+        '<div class="destination">' + d.word + '</div>' +
+        '<div class="cat">Geheimwort · Runde ' + S.round + '</div>' +
+        '<div class="barcode"></div>';
+    }
+    var bar = $("p-main").querySelector(".barcode");
+    if (bar) bar.style.backgroundImage = barcode(roundKey() + "b");
+  }
+  function holdStart(e){
+    e.preventDefault();
+    holding = true; hasRead = true;
+    $("btn-done").disabled = false;
+    renderPass(true);
+  }
+  function holdEnd(){ if (!holding) return; holding = false; renderPass(false); }
+
+  var hold = $("btn-hold");
+  hold.addEventListener("pointerdown", holdStart);
+  hold.addEventListener("pointerup", holdEnd);
+  hold.addEventListener("pointercancel", holdEnd);
+  hold.addEventListener("pointerleave", holdEnd);
+  hold.addEventListener("contextmenu", function(e){ e.preventDefault(); });
+  window.addEventListener("blur", holdEnd);
+  document.addEventListener("visibilitychange", function(){ if (document.hidden) holdEnd(); });
+
+  $("btn-back").addEventListener("click", function(){ holdEnd(); show("hub"); });
+  $("btn-done").addEventListener("click", function(){
+    holdEnd();
+    if (!hasRead) return;
+    S.turn++;
+    if (S.turn > S.players){ renderHub(); show("hub"); }
+    else { renderHandoff(); show("handoff"); }
+  });
+
+  /* ---------- hub ---------- */
+  function renderHub(){
+    var d = roundData(), solo = S.mode === "solo";
     $("r-num").textContent = S.round;
     $("m-code").textContent = S.code;
+    $("m-code-wrap").hidden = solo;
+    $("m-seat").textContent = nameOf(S.seat);
+    $("m-seat-wrap").hidden = solo;
     $("m-players").textContent = S.players;
-    $("m-seat").textContent = S.seat;
+    $("r-plus").hidden = solo;
+    $("r-minus").hidden = solo;
     $("flightno").textContent = "FLUG " + d.flight;
-    $("starter").textContent = d.starter === S.seat
+    $("starter").textContent = (!solo && d.starter === S.seat)
       ? "Du beginnst."
-      : "Es beginnt Platz " + d.starter + ".";
+      : "Es beginnt " + nameOf(d.starter) + ".";
+    $("hub-hint").textContent = solo
+      ? "Ein Wort pro Person, reihum. Dann zeigen alle gleichzeitig auf einen."
+      : "Halte den Knopf gedrückt, um deinen Pass zu lesen — er verschwindet beim Loslassen.";
+    $("btn-pass").textContent = solo ? "Pässe nochmal durchgeben" : "Pass gedrückt halten";
     resetTimer();
     save();
   }
   $("r-plus").addEventListener("click", function(){ S.round++; renderHub(); });
   $("r-minus").addEventListener("click", function(){ if (S.round > 1) S.round--; renderHub(); });
+  $("btn-pass").addEventListener("click", function(){
+    if (S.mode === "solo") startHandoff(); else openPass();
+  });
 
-  // --- timer ---
+  /* ---------- timer ---------- */
   var tLeft = 90, tId = null;
   function paintTimer(){
     var m = Math.floor(tLeft/60), s = tLeft % 60;
@@ -382,62 +568,24 @@
   });
   resetTimer();
 
-  // --- pass (hold to read) ---
-  var holding = false;
-  function renderPass(reveal){
-    var d = roundData();
-    $("p-seat").textContent = "Platz " + S.seat;
-    $("p-flight").textContent = d.flight;
-    if (!reveal){
-      $("p-main").innerHTML = '<div class="hidden-note">Zum Lesen weiter gedrückt halten</div>';
-      return;
-    }
-    if (S.seat === d.impostor){
-      $("p-main").innerHTML =
-        '<div class="cat">Ziel</div>' +
-        '<div class="destination secret">Unbekannt</div>' +
-        '<div class="cat">Kategorie: ' + d.cat + '</div>' +
-        '<div style="margin-top:14px"><span class="stampmark">Blindpassagier</span></div>' +
-        '<div class="barcode"></div>';
-    } else {
-      $("p-main").innerHTML =
-        '<div class="cat">' + d.cat + '</div>' +
-        '<div class="destination">' + d.word + '</div>' +
-        '<div class="cat">Geheimwort · Runde ' + S.round + '</div>' +
-        '<div class="barcode"></div>';
-    }
-    var bar = $("p-main").querySelector(".barcode");
-    if (bar) bar.style.backgroundImage = barcode(S.code + S.round + "b");
-  }
-  function holdStart(e){ e.preventDefault(); holding = true; renderPass(true); }
-  function holdEnd(){ if (!holding) return; holding = false; renderPass(false); }
-
-  $("btn-pass").addEventListener("click", function(){ renderPass(false); show("pass"); });
-  $("btn-back").addEventListener("click", function(){ holdEnd(); show("hub"); });
-
-  var hold = $("btn-hold");
-  hold.addEventListener("pointerdown", holdStart);
-  hold.addEventListener("pointerup", holdEnd);
-  hold.addEventListener("pointercancel", holdEnd);
-  hold.addEventListener("pointerleave", holdEnd);
-  hold.addEventListener("contextmenu", function(e){ e.preventDefault(); });
-  window.addEventListener("blur", holdEnd);
-  document.addEventListener("visibilitychange", function(){ if (document.hidden) holdEnd(); });
-
-  // --- reveal ---
+  /* ---------- reveal ---------- */
   $("btn-reveal").addEventListener("click", function(){
     var d = roundData();
     $("v-round").textContent = "Runde " + S.round;
     $("v-flight").textContent = d.flight;
     $("v-cat").textContent = d.cat;
     $("v-word").textContent = d.word;
-    $("v-imp").textContent = "Blindpassagier: Platz " + d.impostor;
-    $("v-bar").style.backgroundImage = barcode(S.code + S.round + "v");
+    $("v-imp").textContent = "Blindpassagier: " + nameOf(d.impostor);
+    $("v-bar").style.backgroundImage = barcode(roundKey() + "v");
     stopTimer();
     show("reveal");
   });
   $("btn-back2").addEventListener("click", function(){ show("hub"); });
-  $("btn-next").addEventListener("click", function(){ S.round++; renderHub(); show("hub"); });
+  $("btn-next").addEventListener("click", function(){
+    S.round++;
+    if (S.mode === "solo"){ S.seed = newSeed(); startHandoff(); }
+    else { renderHub(); show("hub"); }
+  });
 
   renderHub();
   show("setup");
